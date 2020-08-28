@@ -155,7 +155,8 @@ read.pp <- function (object = NULL, filenm = NULL,
   dat <- x[order(x[, PredatorL], x[, SpeciesL]), ]
   dat[, PreyGrpL] <- as.factor(as.vector(dat[, PreyGrpL]))
   d <- dat[, DateL]
-  d <- as.POSIXct(as.vector(d), format = Datef, tz = "GMT")
+  if(!inherits(d, "POSIXct")) 
+    d <- as.POSIXct(as.vector(d), format = Datef, tz = "GMT")
   dat[, "Date"] <- d
   f <- dat[, FullnessL]
   dat[, "Fullness"] <- f

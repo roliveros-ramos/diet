@@ -362,8 +362,9 @@ subsamp
 #' @rdname diet-Internal
 formOmat <- function(object, ID){
   
-  
   id <- object[,ID]
+  
+  if(!is.factor(object$Group)) object$Group = as.factor(object$Group)
   
   Omat <- matrix(0, nrow = length(unique(id)), ncol = length(levels(object$Group))+1)
   Omat <- data.frame(Omat)
@@ -375,7 +376,7 @@ formOmat <- function(object, ID){
   for(i in 1:length(unique(id))){
     sub <- object[id == id[i],]
     Xvars <- rbind(Xvars, sub[,-c(ncol(sub), ncol(sub)-1)])
-    Omat[Omat[,ID] == id[i],][,as.vector(sub$Group)] <- sub$W
+    Omat[Omat[,ID] == id[i], ][,as.vector(sub$Group)] <- sub$W
   }
   
   id2 <- match(Omat[,ID], id)
